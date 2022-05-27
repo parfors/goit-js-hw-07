@@ -2,10 +2,11 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const refs = {
-gallery: document.querySelector('.gallery')
+    gallery: document.querySelector('.gallery'),
+    body: document.querySelector('body')
 }
 let modalMarkup = ""
-refs.gallery.addEventListener('click', onGalleryClick)
+refs.body.addEventListener('click', onBodyClick)
 
 function makeGalleryMarkup({ preview, original, description }) {
     return `    
@@ -23,11 +24,13 @@ function makeGalleryMarkup({ preview, original, description }) {
 const galleryMarkup = galleryItems.map(makeGalleryMarkup).join("")
 refs.gallery.insertAdjacentHTML('afterbegin', galleryMarkup)
 
-function onGalleryClick(event) {
+function onBodyClick(event) {
     event.preventDefault();
 
     if (event.target.nodeName !== 'IMG')
-    { return }
+    {
+        removeEventListener()
+    }
     else {
         modalMarkup = basicLightbox.create(`
     <img src="${event.target.dataset.sourse}" width="800" height="600">
